@@ -9,12 +9,18 @@ powered by Claude Code + the `gh` CLI (no MCP, no shared tokens).
 # 1. Authenticate with your own GitHub account (one-time, browser-based)
 gh auth login
 
-# 2. Install dependencies
+# 2. Fork + clone (creates origin=your-fork, upstream=spped2000/...)
+gh repo fork spped2000/claude-workshop-multipleissues --clone --remote
+cd claude-workshop-multipleissues
+
+# 3. Install dependencies
 uv sync
 
-# 3. Run dev server
+# 4. Run dev server
 uv run uvicorn app.main:app --reload
 ```
+
+> Issues live on the **upstream** repo. PRs go from your fork → upstream.
 
 API: http://localhost:8000
 Docs: http://localhost:8000/docs

@@ -6,37 +6,45 @@ FastAPI REST API with in-memory user storage. Python 3.11+.
 
 The API is **intentionally incomplete** — your assigned GitHub issue describes exactly what to add.
 
-## GitHub Workflow — use `gh` CLI
+## GitHub Workflow — use `gh` CLI (fork-based)
 
 This project uses the **GitHub CLI (`gh`)** instead of the GitHub MCP server.
-Each participant authenticates with their own GitHub account via `gh auth login`,
-so PR/comment activity shows up under the participant's profile.
+Each participant works on **their own fork** of `spped2000/claude-workshop-multipleissues`
+and opens cross-fork PRs back to upstream. No collaborator access required.
+
+- `origin` → participant's fork (push commits here)
+- `upstream` → `spped2000/claude-workshop-multipleissues` (issues + PR target live here)
 
 ### Common commands Claude can run
 
 ```bash
-# Read your assigned issue
-gh issue view <N> --json title,body,labels
+# Read assigned issue (issues live on UPSTREAM, not the fork)
+gh issue view <N> --repo spped2000/claude-workshop-multipleissues --json title,body,labels
 
-# List open issues
-gh issue list --state open
+# List open issues on upstream
+gh issue list --repo spped2000/claude-workshop-multipleissues --state open
 
-# Create a branch and PR
-gh pr create --title "..." --body "Closes #<N>"
+# Push to your fork
+git push -u origin <branch>
+
+# Open a PR targeting UPSTREAM (always pass --repo to be safe)
+gh pr create \
+  --repo spped2000/claude-workshop-multipleissues \
+  --title "..." \
+  --body "Closes #<N>"
 
 # Read review comments on a PR
-gh pr view <N> --comments
-gh api repos/{owner}/{repo}/pulls/<N>/comments
+gh pr view <N> --repo spped2000/claude-workshop-multipleissues --comments
 ```
 
 `gh` reads auth from the OS keyring — no token env vars needed.
 
 ## Your Task
 
-1. Read your assigned issue with `gh issue view <N>`
+1. Read your assigned issue with `gh issue view <N> --repo spped2000/claude-workshop-multipleissues`
 2. Implement the feature described in the acceptance criteria
 3. Write or update tests — all existing tests must continue to pass
-4. Open a PR referencing the issue number (e.g. "Closes #1")
+4. Push to your fork and open a PR back to upstream referencing the issue number (e.g. "Closes #1")
 
 ## Coding Conventions
 

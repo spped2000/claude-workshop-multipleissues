@@ -10,11 +10,14 @@ allowed-tools: Read Write Edit Bash Glob Grep
 
 ## Step 1 — Read Review Comments
 
+This project is fork-based — PRs live on the upstream repo. Detect upstream:
+- !`git remote get-url upstream 2>/dev/null | sed -E 's#.*github.com[:/](.+/.+)\.git#\1#' || echo "spped2000/claude-workshop-multipleissues"`
+
 Read review comments on PR #$0:
 
 ```bash
-gh pr view $0 --comments
-gh api repos/{owner}/{repo}/pulls/$0/comments
+gh pr view $0 --repo <upstream> --comments
+gh api repos/<upstream>/pulls/$0/comments
 ```
 
 List each comment with: file path, line number, and what the reviewer requested.
@@ -34,5 +37,6 @@ List every file changed and which review comment it addresses.
 ## Step 4 — Push
 
 Commit with message: `fix: address PR #$0 review comments`
-Push to the existing branch — do not open a new PR.
+Push to the existing branch on **your fork** (`origin`) — do not open a new PR.
+The cross-fork PR will pick up the new commit automatically.
 Report the commit SHA when done.

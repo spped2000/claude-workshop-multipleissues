@@ -9,14 +9,16 @@ allowed-tools: Read Glob Grep Bash
 
 # Explore Issue #$0
 
-## Step 1 — Detect Repository
+## Step 1 — Detect Upstream Repository
 
-- !`gh repo view --json nameWithOwner -q .nameWithOwner 2>/dev/null || git remote get-url origin 2>/dev/null || echo "unknown"`
+This project is fork-based — issues live on `upstream`, not `origin`.
+
+- !`git remote get-url upstream 2>/dev/null | sed -E 's#.*github.com[:/](.+/.+)\.git#\1#' || echo "spped2000/claude-workshop-multipleissues"`
 
 ## Step 2 — Read the Issue
 
-Run `gh issue view $0 --json title,body,labels` to fetch issue $0 from the
-repository detected above.
+Run `gh issue view $0 --repo <upstream-detected-above> --json title,body,labels`
+to fetch issue $0.
 If `gh` is not authenticated, ask the user to run `gh auth login` first.
 
 ## Step 3 — Analyze Codebase Impact
